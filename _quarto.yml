@@ -6,11 +6,11 @@ execute:
   echo: true
 
 book:
-  title: "YOUR PROJECT TITLE"
+  title: "NHANES Weight History"
   author:
-    - AUTHOR1 (UNI1)
-    - AUTHOR2 (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
+    - Yunqing Qiu (yq2374)
+    - Xinyi Chen (xc2719)
+  repo-url: https://github.com/YunjiQ/NHANESweight
   date: today
   page-footer:
     right: |
