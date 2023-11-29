@@ -17,7 +17,14 @@
     "objectID": "data.html#missing-value-analysis",
     "href": "data.html#missing-value-analysis",
     "title": "2  Data",
-    "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis\ntesting\ntesting again"
+    "section": "2.3 Missing value analysis",
+    "text": "2.3 Missing value analysis"
+  },
+  {
+    "objectID": "data.html#research-plan",
+    "href": "data.html#research-plan",
+    "title": "2  Data",
+    "section": "2.2 Research Plan",
+    "text": "2.2 Research Plan\n\n2.2.1 Distribution of Basic Health Metrics\nAn analysis of key health indicators, including weight, height, and BMI, will be conducted. Preprocessing steps will address missing values and outliers to ensure data quality.\n\n\n2.2.2 Age Distribution at Heaviest Weight\nThe study will examine the distribution of participants’ self-reported heaviest weight across various ages to identify significant life stages for health interventions.\n\n\n2.2.3 Longitudinal BMI Changes\nTrends and patterns in BMI changes will be analyzed longitudinally to understand the dynamics of weight management over time.\n\n\n2.2.4 Correlation Analysis Between Factors and BMI Change\n\nExamining Weight Loss Intentions\nThe concordance between individuals’ weight loss intentions and actual BMI changes will be explored, highlighting the psychosocial aspects of health behavior.\nDieting and BMI\nThe relationship between dieting behaviors and BMI changes will be elucidated to potentially inform public health recommendations.\nDietary Preferences\nThe association between dietary preferences and BMI trajectories will be assessed, taking into account the self-reported nature of the NHANES data.\nCombined Impact\nA multivariate approach will be used to understand the collective impact of various factors on BMI changes."
   }
 ]
