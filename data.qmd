@@ -4,8 +4,7 @@
 
 The project utilizes data from the National Health and Nutrition Examination Survey (NHANES), obtained from the Questionnaires, Datasets, and Related Documentation section covering the cycles spanning from 2017 to March 2020.
 
-The data is conducted by the National Center for Health Statistics (NCHS) under the Centers for Disease Control and Prevention (CDC) through interview and questionnaire. NHANES employs a comprehensive approach to data collection. Trained interviewers conduct in-person interviews and ask questions by using the Computer-Assisted Personal Interview (CAPI) system. 
-The questionnaire gathers a broad range of dimensions on demographics, health status, dietary habits, and lifestyle factors directly from participants. Participants aged 16 years and older in the NHANES 2017-March 2020 pre-pandemic sample were eligible. However, eligibility varies by age for some questions.
+The data is conducted by the National Center for Health Statistics (NCHS) under the Centers for Disease Control and Prevention (CDC) through interview and questionnaire. NHANES employs a comprehensive approach to data collection. Trained interviewers conduct in-person interviews and ask questions by using the Computer-Assisted Personal Interview (CAPI) system. The questionnaire gathers a broad range of dimensions on demographics, health status, dietary habits, and lifestyle factors directly from participants. Participants aged 16 years and older in the NHANES 2017-March 2020 pre-pandemic sample were eligible. However, eligibility varies by age for some questions.
 
 NHANEs data are collected in different formats. Questionnaire responses are recorded in a structured manner. Laboratory test results and physical measurements are often numerical. **(need more)**
 
@@ -27,41 +26,34 @@ National Health and Nutrition Examination Survey (NHANES) 2017-March 2020 Data D
 
 ## Research Plan
 
-This research initiative leverages the National Health and Nutrition Examination Survey (NHANES) datasets from 2017 to March 2020, administered by the NCHS and the CDC. The datasets offer comprehensive insights into the health indicators and behaviors of the U.S. population.
-
-### 1. Distribution of Basic Health Metrics
+### Distribution of Basic Health Metrics
 
 An analysis of key health indicators, including weight, height, and BMI, will be conducted. Preprocessing steps will address missing values and outliers to ensure data quality.
 
-### 2. Age Distribution at Heaviest Weight
+### Age Distribution at Heaviest Weight
 
 The study will examine the distribution of participants' self-reported heaviest weight across various ages to identify significant life stages for health interventions.
 
-### 3. Longitudinal BMI Changes
+### Longitudinal BMI Changes
 
 Trends and patterns in BMI changes will be analyzed longitudinally to understand the dynamics of weight management over time.
 
-### 4. Correlation Analysis Between Factors and BMI Change
+### Correlation Analysis Between Factors and BMI Change
 
-#### 4.1. Examining Weight Loss Intentions
+-   Examining Weight Loss Intentions
 
-The concordance between individuals' weight loss intentions and actual BMI changes will be explored, highlighting the psychosocial aspects of health behavior.
+    The concordance between individuals' weight loss intentions and actual BMI changes will be explored, highlighting the psychosocial aspects of health behavior.
 
-#### 4.2. Dieting and BMI
+-   Dieting and BMI
 
-The relationship between dieting behaviors and BMI changes will be elucidated to potentially inform public health recommendations.
+    The relationship between dieting behaviors and BMI changes will be elucidated to potentially inform public health recommendations.
 
-#### 4.3. Dietary Preferences
+-   Dietary Preferences
 
-The association between dietary preferences and BMI trajectories will be assessed, taking into account the self-reported nature of the NHANES data.
+    The association between dietary preferences and BMI trajectories will be assessed, taking into account the self-reported nature of the NHANES data.
 
-#### 4.4. Combined Impact
+-   Combined Impact
 
-A multivariate approach will be used to understand the collective impact of various factors on BMI changes.
-
+    A multivariate approach will be used to understand the collective impact of various factors on BMI changes.
 
 ## Missing value analysis
-
-testing
-
-testing again
