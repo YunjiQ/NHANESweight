@@ -4,20 +4,20 @@
     "href": "index.html",
     "title": "NHANES Weight History",
     "section": "",
-    "text": "1 Introduction"
+    "text": "1 Introduction\nExplain why you chose this topic, and the questions you are interested in studying. Provide context for readers who are not familiar with the topic.\nHow to lose weight? Weight loss is an increasingly common topic among the adults’ lives. The scientific and efficient methods to lose weight are in high demands.\nNational Health and Nutrition Examination Survey (NHANES) conducted a survey on the weight history during the 2019 to 2020 toward thousands of participants aged 16 years and older with different habits and racial background, to investigate the weight loss during the past 12 months and the methods tried for losing or maintaining the weights.\nWith the survey data from NHANES, we can gain some insights from exploring this large sample. We will conduct data pre-processing, trend analysis, correlation study, and statistic tests. According to the research on the data set, we will be able to conclude the most efficient method or combination of methods for controling the weights and provide specific recommendations for different groups of people."
   },
   {
     "objectID": "data.html#description",
     "href": "data.html#description",
     "title": "2  Data",
     "section": "2.1 Description",
-    "text": "2.1 Description"
+    "text": "2.1 Description\nThe project utilizes data from the National Health and Nutrition Examination Survey (NHANES), obtained from the Questionnaires, Datasets, and Related Documentation section covering the cycles spanning from 2017 to March 2020.\nThe data is conducted by the National Center for Health Statistics (NCHS) under the Centers for Disease Control and Prevention (CDC) through interview and questionnaire. NHANES employs a comprehensive approach to data collection. Trained interviewers conduct in-person interviews and ask questions by using the Computer-Assisted Personal Interview (CAPI) system. The questionnaire gathers a broad range of dimensions on demographics, health status, dietary habits, and lifestyle factors directly from participants. Participants aged 16 years and older in the NHANES 2017-March 2020 pre-pandemic sample were eligible. However, eligibility varies by age for some questions.\nNHANEs data are collected in different formats. Questionnaire responses are recorded in a structured manner. Laboratory test results and physical measurements are often numerical. (need more)\nNHANES is conducted a two-year cycle starting 1999. While the new data is collected regularly, the release of updated datasets may not occur as frequently, and the data from 2021 to 2023 is currently unavailable. In our project, we use the data from 2017 to March 2020 Pre-Pandemic instead of the data from 2019 to 2020 because of the immediate pandemic effects. The NHANES program suspended field operations in March 2020 due to the coronavirus disease pandemic. As a result, data collection for the NHANES 2019-2020 cycle remained incomplete and the collected data are not nationally representative. To address this problem, data collected from 2019 to March 2020 were combined with data from the NHANES 2017-2018 cycle to form a nationally representative sample of NHANES 2017-March 2020 pre-pandemic data.\nWhile the NHANES dataset is generally reliable and valuable, it is essential to be aware of potential issues and limitations when working with this data.\n\nThe complex sampling methodology may introduce sampuing error, and non-response bias could affect the generalizability of the findings.\nSome information, such as dietary habits and lifestyle factors, is self-reported and subject to recall bias. Participants may not always accurately remember or report their behaviors, leading to potential inaccuracies.\nWhile NHANES captures a broad range of health indicators, it may not fully address all dimensions of health disparities. Certain subgroups may be underrepresented or face unique health challenges not fully captured in the survey.\n\nExplain how you plan to import the data\nDocumentation and Links:\nNational Health and Nutrition Examination Survey (NHANES) 2017-March 2020 Data Documentation, Codebook, and Frequencies: https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Questionnaire&Cycle=2017-2020"
   },
   {
     "objectID": "data.html#missing-value-analysis",
     "href": "data.html#missing-value-analysis",
     "title": "2  Data",
     "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis"
+    "text": "2.2 Missing value analysis\ntesting\ntesting again"
   }
 ]

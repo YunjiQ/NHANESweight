@@ -2,11 +2,28 @@
 
 ## Description
 
-Identify one or more **data sources** (see II. D. above) that you propose to draw on for the project. For each, describe **how the data are collected** and **by whom**. Describe the **format** of the data, the frequency of **updates, dimensions**, and any other relevant information. Note any issues / problems with the data, either known or that you discover. Explain how you **plan to import** the data. Carefully document your sources **with links** to the precise data sources that you used. If that is not possible (for example if your data is not available online, then explain that clearly.)
+The project utilizes data from the National Health and Nutrition Examination Survey (NHANES), obtained from the Questionnaires, Datasets, and Related Documentation section covering the cycles spanning from 2017 to March 2020.
 
-The data set used in this project is acquired from the National Center for Health Statistics under the Weight History section in the study of "2017-March 2020 Pre-Pandemic Questionnaire Data - Continuous NHANES"(<https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Questionnaire&Cycle=2017-2020>).
+The data is conducted by the National Center for Health Statistics (NCHS) under the Centers for Disease Control and Prevention (CDC) through interview and questionnaire. NHANES employs a comprehensive approach to data collection. Trained interviewers conduct in-person interviews and ask questions by using the Computer-Assisted Personal Interview (CAPI) system. 
+The questionnaire gathers a broad range of dimensions on demographics, health status, dietary habits, and lifestyle factors directly from participants. Participants aged 16 years and older in the NHANES 2017-March 2020 pre-pandemic sample were eligible. However, eligibility varies by age for some questions.
 
-The data is collected through the interview and questionnaire. The trained interviewers are asked to answer these questions in the home using the Computer-Assisted Personal Interview system.
+NHANEs data are collected in different formats. Questionnaire responses are recorded in a structured manner. Laboratory test results and physical measurements are often numerical. **(need more)**
+
+NHANES is conducted a two-year cycle starting 1999. While the new data is collected regularly, the release of updated datasets may not occur as frequently, and the data from 2021 to 2023 is currently unavailable. In our project, we use the data from 2017 to March 2020 Pre-Pandemic instead of the data from 2019 to 2020 because of the immediate pandemic effects. The NHANES program suspended field operations in March 2020 due to the coronavirus disease pandemic. As a result, data collection for the NHANES 2019-2020 cycle remained incomplete and the collected data are not nationally representative. To address this problem, data collected from 2019 to March 2020 were combined with data from the NHANES 2017-2018 cycle to form a nationally representative sample of NHANES 2017-March 2020 pre-pandemic data.
+
+While the NHANES dataset is generally reliable and valuable, it is essential to be aware of potential issues and limitations when working with this data.
+
+-   The complex sampling methodology may introduce sampuing error, and non-response bias could affect the generalizability of the findings.
+
+-   Some information, such as dietary habits and lifestyle factors, is self-reported and subject to recall bias. Participants may not always accurately remember or report their behaviors, leading to potential inaccuracies.
+
+-   While NHANES captures a broad range of health indicators, it may not fully address all dimensions of health disparities. Certain subgroups may be underrepresented or face unique health challenges not fully captured in the survey.
+
+**Explain how you plan to import the data**
+
+Documentation and Links:
+
+National Health and Nutrition Examination Survey (NHANES) 2017-March 2020 Data Documentation, Codebook, and Frequencies: <https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Questionnaire&Cycle=2017-2020>
 
 ## Missing value analysis
 
