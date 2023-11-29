@@ -1,1 +1,9 @@
 # Introduction
+
+Explain why you chose this topic, and the questions you are interested in studying. Provide context for readers who are not familiar with the topic.
+
+How to lose weight? Weight loss is an increasingly common topic among the adults' lives. The scientific and efficient methods to lose weight are in high demands. 
+
+National Health and Nutrition Examination Survey (NHANES) conducted a survey on the weight history during the 2019 to 2020 toward thousands of participants aged 16 years and older with different habits and racial background, to investigate the weight loss during the past 12 months and the methods tried for losing or maintaining the weights.
+
+With the survey data from NHANES, we can gain some insights from exploring this large sample. We will conduct data pre-processing, trend analysis, correlation study, and statistic tests. According to the research on the data set, we will be able to conclude the most efficient method or combination of methods for controling the weights and provide specific recommendations for different groups of people.

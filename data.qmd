@@ -2,4 +2,10 @@
 
 ## Description
 
+Identify one or more **data sources** (see II. D. above) that you propose to draw on for the project. For each, describe **how the data are collected** and **by whom**. Describe the **format** of the data, the frequency of **updates, dimensions**, and any other relevant information. Note any issues / problems with the data, either known or that you discover. Explain how you **plan to import** the data. Carefully document your sources **with links** to the precise data sources that you used. If that is not possible (for example if your data is not available online, then explain that clearly.)
+
+The data set used in this project is acquired from the National Center for Health Statistics under the Weight History section in the study of "2017-March 2020 Pre-Pandemic Questionnaire Data - Continuous NHANES"(<https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx?Component=Questionnaire&Cycle=2017-2020>).
+
+The data is collected through the interview and questionnaire. The trained interviewers are asked to answer these questions in the home using the Computer-Assisted Personal Interview system.
+
 ## Missing value analysis
