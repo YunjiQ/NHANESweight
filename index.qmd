@@ -1,9 +1,11 @@
 # Introduction
 
-Explain why you chose this topic, and the questions you are interested in studying. Provide context for readers who are not familiar with the topic.
+**Explain why you chose this topic, and the questions you are interested in studying. Provide context for readers who are not familiar with the topic.**
 
-How to lose weight? Weight loss is an increasingly common topic among the adults' lives. The scientific and efficient methods to lose weight are in high demands. 
+How do you consider your weight? Have you ever tried to lose weight in the past few years? It is interesting to observe that weight loss has become a prevalent concern in the lives of many adults. More and more people start to loss weight and focus on achieving a balanced and fit body, which prompt a growing interest in scientific and efficient methods to achieving this goal.
 
-National Health and Nutrition Examination Survey (NHANES) conducted a survey on the weight history during the 2019 to 2020 toward thousands of participants aged 16 years and older with different habits and racial background, to investigate the weight loss during the past 12 months and the methods tried for losing or maintaining the weights.
+The National Health and Nutrition Examination Survey (NHANES) is is a program conducted by the National Center for Health Statistics (NCHS), which is part of the Centers for Disease Control and Prevention (CDC) in the United States. Under the guidance of the CDC, NHANES empowers researchers, policymakers, and healthcare professionals with the tools to understand health trends, identify emerging issues, and tailor interventions to the specific needs of diverse populations.
+
+Recognizing the significance of this health endeavor, the NHANES conducted survey on the weight history on a two-year cycle basis to keep the information updated. The survey targeted thousands of participants aged 16 years and older, encompassing individuals with diverse habits and racial background. The primary objective of this survey is to investigate the dynamics of weight loss during the past 12 months and explore the methods that are endeavored by its participants to loss or maintain their weight.
 
 With the survey data from NHANES, we can gain some insights from exploring this large sample. We will conduct data pre-processing, trend analysis, correlation study, and statistic tests. According to the research on the data set, we will be able to conclude the most efficient method or combination of methods for controling the weights and provide specific recommendations for different groups of people.
