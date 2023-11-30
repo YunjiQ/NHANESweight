@@ -4,21 +4,25 @@
 
 The project utilizes data from the National Health and Nutrition Examination Survey (NHANES), obtained from the Questionnaires, Datasets, and Related Documentation section covering the cycles spanning from 2017 to March 2020.
 
-The data is conducted by the National Center for Health Statistics (NCHS) under the Centers for Disease Control and Prevention (CDC) through interview and questionnaire. NHANES employs a comprehensive approach to data collection. Trained interviewers conduct in-person interviews and ask questions by using the Computer-Assisted Personal Interview (CAPI) system. The questionnaire gathers a broad range of dimensions on demographics, health status, dietary habits, and lifestyle factors directly from participants. Participants aged 16 years and older in the NHANES 2017-March 2020 pre-pandemic sample were eligible. However, eligibility varies by age for some questions.
+The data is collected by the National Center for Health Statistics (NCHS) under the Centers for Disease Control and Prevention (CDC) through interviews and questionnaires. NHANES employs a comprehensive approach to data collection. Trained interviewers conduct in-person interviews and ask questions by using the Computer-Assisted Personal Interview (CAPI) system. The questionnaire gathers a broad range of dimensions on demographics, health status, dietary habits, and lifestyle factors directly from participants. Participants aged 16 years and older in the NHANES 2017-March 2020 pre-pandemic sample were eligible. However, eligibility varies by age for some questions.
 
-NHANEs data are collected in different formats. Questionnaire responses are recorded in a structured manner. Laboratory test results and physical measurements are often numerical. **(need more)**
+NHANES data are collected in different formats. Questionnaire responses are recorded in a structured manner. Laboratory test results and physical measurements are often numerical. In this project, we will utilize the questionnaire responses to record the self-reported weight changes and some related factors. The research will be conducted surrounding the possible impact factor for weight loss, and the detailed research plan shown in section 2.2.
 
 NHANES is conducted a two-year cycle starting 1999. While the new data is collected regularly, the release of updated datasets may not occur as frequently, and the data from 2021 to 2023 is currently unavailable. In our project, we use the data from 2017 to March 2020 Pre-Pandemic instead of the data from 2019 to 2020 because of the immediate pandemic effects. The NHANES program suspended field operations in March 2020 due to the coronavirus disease pandemic. As a result, data collection for the NHANES 2019-2020 cycle remained incomplete and the collected data are not nationally representative. To address this problem, data collected from 2019 to March 2020 were combined with data from the NHANES 2017-2018 cycle to form a nationally representative sample of NHANES 2017-March 2020 pre-pandemic data.
 
 While the NHANES dataset is generally reliable and valuable, it is essential to be aware of potential issues and limitations when working with this data.
 
--   The complex sampling methodology may introduce sampuing error, and non-response bias could affect the generalizability of the findings.
+-   The complex sampling methodology may introduce sampling error, and non-response bias could affect the generalizability of the findings.
 
 -   Some information, such as dietary habits and lifestyle factors, is self-reported and subject to recall bias. Participants may not always accurately remember or report their behaviors, leading to potential inaccuracies.
 
 -   While NHANES captures a broad range of health indicators, it may not fully address all dimensions of health disparities. Certain subgroups may be underrepresented or face unique health challenges not fully captured in the survey.
 
-**Explain how you plan to import the data**
+Import the data:
+
+-   Download the "P_WHQ Data" XPT file from the CDC website.
+
+-   Import and read the data in RStudio with `read_xpt()` function.
 
 Documentation and Links:
 
@@ -28,29 +32,29 @@ National Health and Nutrition Examination Survey (NHANES) 2017-March 2020 Data D
 
 ### Distribution of Basic Health Metrics
 
-An analysis of key health indicators, including weight, height, and BMI, will be conducted. Preprocessing steps will address missing values and outliers to ensure data quality.
+An analysis of key health indicators, including weight and height will be conducted. We will also calculate and show each sample's BMI for further research.
 
 ### Age Distribution at Heaviest Weight
 
-The study will examine the distribution of participants' self-reported heaviest weight across various ages to identify significant life stages for health interventions.
+The study will examine the distribution of participants' self-reported heaviest weight across various ages to identify whether there is a common age period for weight gain.
 
 ### Longitudinal BMI Changes
 
-Trends and patterns in BMI changes will be analyzed longitudinally to understand the dynamics of weight management over time.
+Since BMI is more scientific and representative of personal weight health, trends and patterns in BMI changes will be analyzed longitudinally to understand the dynamics of weight management over time.
 
 ### Correlation Analysis Between Factors and BMI Change
 
 -   Examining Weight Loss Intentions
 
-    The concordance between individuals' weight loss intentions and actual BMI changes will be explored, highlighting the psychosocial aspects of health behavior.
+    The concordance between individuals' weight loss intentions and actual BMI changes will be explored.
 
 -   Dieting and BMI
 
-    The relationship between dieting behaviors and BMI changes will be elucidated to potentially inform public health recommendations.
+    The relationship between dieting behaviors (e.g. skipping meals, eating less) and BMI changes.
 
 -   Dietary Preferences
 
-    The association between dietary preferences and BMI trajectories will be assessed, taking into account the self-reported nature of the NHANES data.
+    The association between dietary preferences and BMI trajectories will be assessed.
 
 -   Combined Impact
 
