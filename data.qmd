@@ -90,4 +90,6 @@ whq <- raw_whq |>
 # show after-version missing-value plot
 after <- missing_data.frame(whq)
 image(after)
+
+write.csv(whq, "data/whq.csv")
 ```
