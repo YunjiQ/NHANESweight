@@ -12,4 +12,6 @@ whq <- read.csv("data/whq.csv")
 
 whq$prev_bmi <- round((whq$previous_weight / (whq$current_height^2)) * 703, 2)
 whq$curr_bmi <- round((whq$current_weight / (whq$current_height^2)) * 703, 2)
+
+write.csv(whq, "data/whq.csv")
 ```

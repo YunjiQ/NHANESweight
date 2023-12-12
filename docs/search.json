@@ -32,6 +32,6 @@
     "href": "results.html#longitudinal-bmi-changes",
     "title": "3  Results",
     "section": "3.1 Longitudinal BMI Changes",
-    "text": "3.1 Longitudinal BMI Changes\nIn order to further know the weight health of the sample, we firstly use the BMI formula given by the CDC to calculate each person’s current and previous BMI.\n\nFormula: weight (lb) / [height (in)]2 x 703\n\n\n\nCode\n# get the bmi\nwhq &lt;- read.csv(\"data/whq.csv\")\n\nwhq$prev_bmi &lt;- round((whq$previous_weight / (whq$current_height^2)) * 703, 2)\nwhq$curr_bmi &lt;- round((whq$current_weight / (whq$current_height^2)) * 703, 2)"
+    "text": "3.1 Longitudinal BMI Changes\nIn order to further know the weight health of the sample, we firstly use the BMI formula given by the CDC to calculate each person’s current and previous BMI.\n\nFormula: weight (lb) / [height (in)]2 x 703\n\n\n\nCode\n# get the bmi\nwhq &lt;- read.csv(\"data/whq.csv\")\n\nwhq$prev_bmi &lt;- round((whq$previous_weight / (whq$current_height^2)) * 703, 2)\nwhq$curr_bmi &lt;- round((whq$current_weight / (whq$current_height^2)) * 703, 2)\n\nwrite.csv(whq, \"data/whq.csv\")"
   }
 ]
