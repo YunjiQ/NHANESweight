@@ -65,13 +65,25 @@ whq$age_group <- cut(whq$age_heaviest_weight,
                      labels = c("11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80"),
                      include.lowest = TRUE)
 
-ggplot(whq, aes(y = age_group)) +
-  geom_bar(fill = "blue", color = "black", alpha = 0.7) +
-  labs(title = "Age Distribution",
-       x = "Count",
-       y = "Age Range") +
+plot_data <- whq %>%
+  group_by(age_group, gender) %>%
+  summarise(count = n()) %>%
+  ungroup()
+
+plot_data$count[plot_data$gender == "female"] <- -plot_data$count[plot_data$gender == "female"]
+
+ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
+  geom_bar(stat = "identity", position = "identity", color = "black", alpha = 0.7) +
+  geom_text(aes(label = abs(count), hjust = ifelse(count < 0, 1.1, -0.1)), color = "black", size = 3) +
+  labs(title = "Age Distribution by Gender",
+       x = "Position",
+       y = "Count") +
+  scale_x_continuous(labels = abs) + 
   theme_minimal()
 ```
+
+
+
 
 ## Correlation Analysis Between Factors and BMI Change
 
