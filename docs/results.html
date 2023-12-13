@@ -177,6 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#longitudinal-bmi-changes" id="toc-longitudinal-bmi-changes" class="nav-link active" data-scroll-target="#longitudinal-bmi-changes"><span class="header-section-number">3.1</span> Longitudinal BMI Changes</a></li>
+  <li><a href="#correlation-analysis-between-factors-and-bmi-change" id="toc-correlation-analysis-between-factors-and-bmi-change" class="nav-link" data-scroll-target="#correlation-analysis-between-factors-and-bmi-change"><span class="header-section-number">3.2</span> Correlation Analysis Between Factors and BMI Change</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YunjiQ/NHANESweight/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/YunjiQ/NHANESweight/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -210,14 +211,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the bmi</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>whq <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/whq.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>whq <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/whq_handle_missing.csv"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>prev_bmi <span class="ot">&lt;-</span> <span class="fu">round</span>((whq<span class="sc">$</span>previous_weight <span class="sc">/</span> (whq<span class="sc">$</span>current_height<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">*</span> <span class="dv">703</span>, <span class="dv">2</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>curr_bmi <span class="ot">&lt;-</span> <span class="fu">round</span>((whq<span class="sc">$</span>current_weight <span class="sc">/</span> (whq<span class="sc">$</span>current_height<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">*</span> <span class="dv">703</span>, <span class="dv">2</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(whq, <span class="st">"data/whq.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>classify_bmi <span class="ot">&lt;-</span> <span class="cf">function</span>(bmi) {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (bmi <span class="sc">&lt;</span> <span class="fl">18.5</span>) {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">'Underweight'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (bmi <span class="sc">&gt;=</span> <span class="fl">18.5</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;=</span> <span class="fl">24.99</span>) {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">'Healthy Weight'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (bmi <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;=</span> <span class="fl">29.99</span>) {</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">'Overweight'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">'Obese'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># classify the bmi level</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>prev_bmi_level <span class="ot">&lt;-</span> <span class="fu">sapply</span>(whq<span class="sc">$</span>prev_bmi, classify_bmi)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>curr_bmi_level <span class="ot">&lt;-</span> <span class="fu">sapply</span>(whq<span class="sc">$</span>curr_bmi, classify_bmi)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>prev_bmi_level <span class="ot">&lt;-</span> <span class="fu">factor</span>(whq<span class="sc">$</span>prev_bmi_level, </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'Underweight'</span>, <span class="st">'Healthy Weight'</span>, <span class="st">'Overweight'</span>, <span class="st">'Obese'</span>))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>curr_bmi_level <span class="ot">&lt;-</span> <span class="fu">factor</span>(whq<span class="sc">$</span>curr_bmi_level, </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">'Underweight'</span>, <span class="st">'Healthy Weight'</span>, <span class="st">'Overweight'</span>, <span class="st">'Obese'</span>))</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>bmi_change <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(whq<span class="sc">$</span>curr_bmi) <span class="sc">-</span> <span class="fu">as.numeric</span>(whq<span class="sc">$</span>prev_bmi)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># subtracting the factors to see the change</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>change_in_BMI_level <span class="ot">&lt;-</span> </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(whq<span class="sc">$</span>curr_bmi_level) <span class="sc">-</span> <span class="fu">as.numeric</span>(whq<span class="sc">$</span>prev_bmi_level)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>bmi_level_change <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(change_in_BMI_level <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">"lose"</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">ifelse</span>(change_in_BMI_level <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">"gain"</span>, <span class="st">"maintain"</span>))</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(whq, <span class="st">"data/whq.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># nrow(whq) # 4503</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># min(whq$age_heaviest_weight) # 12</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># max(whq$age_heaviest_weight) # 99999</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(whq[whq<span class="sc">$</span>age_heaviest_weight <span class="sc">&gt;</span> <span class="dv">80</span>, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>whq <span class="ot">&lt;-</span> whq <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age_heaviest_weight <span class="sc">&lt;</span> <span class="dv">100</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>age_group <span class="ot">&lt;-</span> <span class="fu">cut</span>(whq<span class="sc">$</span>age_heaviest_weight,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"11-20"</span>, <span class="st">"21-30"</span>, <span class="st">"31-40"</span>, <span class="st">"41-50"</span>, <span class="st">"51-60"</span>, <span class="st">"61-70"</span>, <span class="st">"71-80"</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(whq, <span class="fu">aes</span>(<span class="at">y =</span> age_group)) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age Distribution"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Count"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Age Range"</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="correlation-analysis-between-factors-and-bmi-change" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="correlation-analysis-between-factors-and-bmi-change"><span class="header-section-number">3.2</span> Correlation Analysis Between Factors and BMI Change</h2>
+<ul>
+<li><p>Dieting and BMI</p></li>
+</ul>
 
 
 </section>

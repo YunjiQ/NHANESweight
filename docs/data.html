@@ -212,7 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
 <p>The project utilizes data from the National Health and Nutrition Examination Survey (NHANES), obtained from the Questionnaires, Datasets, and Related Documentation section covering the cycles spanning from 2017 to March 2020.</p>
 <p>The data is collected by the National Center for Health Statistics (NCHS) under the Centers for Disease Control and Prevention (CDC) through interviews and questionnaires. NHANES employs a comprehensive approach to data collection. Trained interviewers conduct in-person interviews and ask questions by using the Computer-Assisted Personal Interview (CAPI) system. The questionnaire gathers a broad range of dimensions on demographics, health status, dietary habits, and lifestyle factors directly from participants. Participants aged 16 years and older in the NHANES 2017-March 2020 pre-pandemic sample were eligible. However, eligibility varies by age for some questions.</p>
-<p>NHANES data are collected in different formats. Questionnaire responses are recorded in a structured manner. Laboratory test results and physical measurements are often numerical. In this project, we will utilize the questionnaire responses to record the self-reported weight changes and some related factors. The research will be conducted surrounding the possible impact factor for weight loss, and the detailed research plan shown in section 2.2. The dimension for the original data set is 10195 samples with 36 features. However, based on the research questions, we will select the relevant features and conduct pre-processing, and the pre-processed data set has 4781 objects with 13 features.</p>
+<p>NHANES data are collected in different formats. Questionnaire responses are recorded in a structured manner. Laboratory test results and physical measurements are often numerical. In this project, we will utilize the questionnaire responses to record the self-reported weight changes and some related factors. The research will be conducted surrounding the possible impact factor for weight loss, and the detailed research plan shown in section 2.2. The dimension for the original data set is 10195 samples with 36 features. However, based on the research questions, we will select the relevant features and conduct pre-processing, and the pre-processed data set has 4781 objects with 17 features.</p>
 <p>NHANES is conducted a two-year cycle starting 1999. While the new data is collected regularly, the release of updated datasets may not occur as frequently, and the data from 2021 to 2023 is currently unavailable. In our project, we use the data from 2017 to March 2020 Pre-Pandemic instead of the data from 2019 to 2020 because of the immediate pandemic effects. The NHANES program suspended field operations in March 2020 due to the coronavirus disease pandemic. As a result, data collection for the NHANES 2019-2020 cycle remained incomplete and the collected data are not nationally representative. To address this problem, data collected from 2019 to March 2020 were combined with data from the NHANES 2017-2018 cycle to form a nationally representative sample of NHANES 2017-March 2020 pre-pandemic data.</p>
 <p>While the NHANES dataset is generally reliable and valuable, it is essential to be aware of potential issues and limitations when working with this data.</p>
 <ul>
@@ -281,14 +281,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># handle missing value</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>whq <span class="ot">&lt;-</span> raw_whq <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>whq_handle_missing <span class="ot">&lt;-</span> raw_whq <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(current_height)) <span class="sc">|&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(current_weight)) <span class="sc">|&gt;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(previous_weight)) <span class="sc">|&gt;</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(age_heaviest_weight))</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># show after-version missing-value plot</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> <span class="fu">missing_data.frame</span>(whq)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>after <span class="ot">&lt;-</span> <span class="fu">missing_data.frame</span>(whq_handle_missing)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">image</span>(after)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(whq, <span class="st">"data/whq.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(whq_handle_missing, <span class="st">"data/whq_handle_missing.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 

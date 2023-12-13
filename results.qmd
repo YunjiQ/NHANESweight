@@ -6,17 +6,46 @@ In order to further know the weight health of the sample, we firstly use the BMI
 
 -   **Formula: weight (lb) / \[height (in)\]^2^ x 703**
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 # get the bmi
-whq <- read.csv("data/whq.csv")
+whq <- read.csv("data/whq_handle_missing.csv")
 
 whq$prev_bmi <- round((whq$previous_weight / (whq$current_height^2)) * 703, 2)
 whq$curr_bmi <- round((whq$current_weight / (whq$current_height^2)) * 703, 2)
 
+classify_bmi <- function(bmi) {
+  if (bmi < 18.5) {
+    return('Underweight')
+  } else if (bmi >= 18.5 & bmi <= 24.99) {
+    return('Healthy Weight')
+  } else if (bmi >= 25 & bmi <= 29.99) {
+    return('Overweight')
+  } else {
+    return('Obese')
+  }
+}
+
+# classify the bmi level
+whq$prev_bmi_level <- sapply(whq$prev_bmi, classify_bmi)
+whq$curr_bmi_level <- sapply(whq$curr_bmi, classify_bmi)
+
+whq$prev_bmi_level <- factor(whq$prev_bmi_level, 
+                        levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
+whq$curr_bmi_level <- factor(whq$curr_bmi_level, 
+                        levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
+
+whq$bmi_change <- as.numeric(whq$curr_bmi) - as.numeric(whq$prev_bmi)
+
+# subtracting the factors to see the change
+change_in_BMI_level <- 
+  as.numeric(whq$curr_bmi_level) - as.numeric(whq$prev_bmi_level)
+whq$bmi_level_change <- ifelse(change_in_BMI_level < 0, "lose",
+                             ifelse(change_in_BMI_level > 0, "gain", "maintain"))
+
 write.csv(whq, "data/whq.csv")
 ```
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 library(ggplot2)
 
 # nrow(whq) # 4503
@@ -25,8 +54,10 @@ library(ggplot2)
 nrow(whq[whq$age_heaviest_weight > 80, ])
 ```
 
-```{r}
-whq <- whq %>% 
+```{r warning=FALSE, message=FALSE}
+library(dplyr)
+
+whq <- whq |>
   filter(age_heaviest_weight < 100)
 
 whq$age_group <- cut(whq$age_heaviest_weight,
@@ -42,5 +73,10 @@ ggplot(whq, aes(y = age_group)) +
   theme_minimal()
 ```
 
+## Correlation Analysis Between Factors and BMI Change
 
+-   Dieting and BMI
 
+    ```{r}
+
+    ```
