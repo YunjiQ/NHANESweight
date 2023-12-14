@@ -47,15 +47,36 @@ write.csv(whq, "data/whq.csv")
 
 ```{r warning=FALSE, message=FALSE}
 library(ggplot2)
-
+library(dplyr)
 # nrow(whq) # 4503
-# min(whq$age_heaviest_weight) # 12
-# max(whq$age_heaviest_weight) # 99999
-nrow(whq[whq$age_heaviest_weight > 80, ])
+
 ```
 
+
+## 1. Hexgon Heatmap - BMI distribution by gender
+
+```{r}
+# nrow(whq[whq$current_weight > 600, ]) # 39
+# nrow(whq[whq$current_height > 100, ]) # 48
+
+whq <- whq |>
+  filter(current_height < 100) |>
+  filter(current_weight < 600)
+
+ggplot(whq, aes(current_height, current_weight)) +
+  geom_point(alpha = 0.3) +
+  geom_density_2d() +
+  labs(title = "Scatterplot with Density Contour Lines",
+       x = "Current Height",
+       y = "Current Weight")
+```
+
+## 2. Pyramid chart - Age distribution by gender
+
 ```{r warning=FALSE, message=FALSE}
-library(dplyr)
+# min(whq$age_heaviest_weight) # 12
+# max(whq$age_heaviest_weight) # 99999
+# nrow(whq[whq$age_heaviest_weight > 80, ]) # 21  
 
 whq <- whq |>
   filter(age_heaviest_weight < 100)
