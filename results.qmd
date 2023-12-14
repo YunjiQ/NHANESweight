@@ -3,6 +3,10 @@
 ```{r warning=FALSE, message=FALSE, include = FALSE}
 library(ggplot2)
 library(dplyr)
+
+# get the bmi
+whq <- read.csv("data/whq_handle_missing.csv")
+
 # nrow(whq) # 4503
 ```
 
@@ -36,11 +40,6 @@ $$
 We utilize the following BMI categories ranging from underweight to obese in the chart below:
 
 ```{r warning=FALSE, message=FALSE, include = FALSE}
-library(dplyr)
-
-# get the bmi
-whq <- read.csv("data/whq_handle_missing.csv")
-
 whq$prev_bmi <- round((whq$previous_weight / (whq$current_height^2)) * 703, 2)
 whq$curr_bmi <- round((whq$current_weight / (whq$current_height^2)) * 703, 2)
 
@@ -88,6 +87,12 @@ write.csv(whq, "data/whq.csv", row.names = FALSE)
 Based on the BMI we calculated, we use a heatmap to take a look at the overall counts for both previous BMI and current BMI. The diagonal trend observed from the bottom left to the top right suggests that many individuals have remained within a similar BMI category. The lighter squares along the diagonal implies a consistency in BMI over time for a substantial number of participants. However, there are also some lighter squares off the diagonal, indicating that there have been changes in BMI for some individuals either towards the higher or lower end.
 
 The heatmap also shows a concentrated cluster of values within the BMI range of 20 to 30. To better take a look at the current BMI level of each clusters, we add overlaid points onto the heatmap, color-coded based on the current BMI level. The resulting visualization vividly illustrates that the majority of individuals within this BMI range are classified as overweight, and there do has a large amount of people are classified as health weight and obese.
+
+```{r, include = FALSE}
+whq1 <- whq |>
+  filter(current_height < 100) |>
+  filter(current_weight < 600)
+```
 
 ```{r}
 ggplot(whq1, aes(prev_bmi, curr_bmi)) +
