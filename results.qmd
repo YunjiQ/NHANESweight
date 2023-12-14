@@ -7,6 +7,8 @@ In order to further know the weight health of the sample, we firstly use the BMI
 -   **Formula: weight (lb) / \[height (in)\]^2^ x 703**
 
 ```{r warning=FALSE, message=FALSE}
+library(dplyr)
+
 # get the bmi
 whq <- read.csv("data/whq_handle_missing.csv")
 
@@ -42,6 +44,13 @@ whq$bmi_level_change <- ifelse(whq$bmi_change < 0, "lose",
 whq$bmi_level_change <- factor(whq$bmi_level_change, 
                         levels = c('lose', 'maintain', 'gain'))
 
+# remove outliers
+whq <- whq |>
+  filter(age_heaviest_weight < 100) |>
+  filter(current_height < 100) |>
+  filter(current_weight < 1000) |>
+  filter(previous_weight < 1000)
+
 write.csv(whq, "data/whq.csv", row.names = FALSE)
 ```
 
@@ -52,7 +61,7 @@ library(dplyr)
 
 ```
 
-## 1. Hexgon Heatmap - BMI distribution by gender
+## Scatter plot with Contour line - Weight and height distribution by gender
 
 ```{r}
 # nrow(whq[whq$current_weight > 600, ]) # 39
@@ -70,15 +79,24 @@ ggplot(whq, aes(current_height, current_weight)) +
        y = "Current Weight")
 ```
 
-## 2. Pyramid chart - Age distribution by gender
+## Violin plot - BMI distribution by race
+
+```{r fig.width=12, fig.height=8}
+library(ggplot2)
+
+ggplot(whq, aes(x = curr_bmi, y = race, fill = race)) + 
+  geom_violin(trim=FALSE) +
+  geom_boxplot(width=0.1, fill="white") +
+  labs(title="BMI Distribution among Race",x="Race", y = "BMI") +
+  scale_fill_brewer(palette="Set3")
+```
+
+## Pyramid chart - Age of the heavist weight distribution by gender
 
 ```{r warning=FALSE, message=FALSE}
 # min(whq$age_heaviest_weight) # 12
 # max(whq$age_heaviest_weight) # 99999
 # nrow(whq[whq$age_heaviest_weight > 80, ]) # 21  
-
-whq <- whq |>
-  filter(age_heaviest_weight < 100)
 
 whq$age_group <- cut(whq$age_heaviest_weight,
                      breaks = c(10, 20, 30, 40, 50, 60, 70, 80),
@@ -125,9 +143,6 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
 
     ```
 
-```{=html}
-<!-- -->
-```
 -   Dietary Preferences
 
     ```{r warning=FALSE, fig.width=10}
