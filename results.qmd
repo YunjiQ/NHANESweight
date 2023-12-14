@@ -115,7 +115,7 @@ ggplot(whq1, aes(prev_bmi, curr_bmi)) +
 
 ## Alluvial - BMI Level Change
 
-To see the dynamics of BMI level changes over time, we employed an alluvial plot to see the transitions between different BMI categories from the previous year to the current year. As the graph shows, a substantial amount of individuals have maintained a consistent BMI level, with a notable concentration in obese category. 
+To see the dynamics of BMI level changes over time, we employed an alluvial plot to see the transitions between different BMI categories from the previous year to the current year. As the graph shows, a substantial amount of individuals have maintained a consistent BMI level, with a notable concentration in obese category.
 
 In instances of BMI level changes, the most prominent transition is observed in individuals moving from the obese level to overweight. A smaller yet noteworthy group has significant weight loss, transitioning from obese to healthy weight. And there also have some individuals transition from overweight to a healthy weight, reflecting positive changes in lifestyle and weight management strategies. Conversely, there are instances where individuals have moved from healthier BMI level to overweight or obese.
 
@@ -208,7 +208,7 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
 
 -   Weight Loss Intentions & Behavior
 
-    ```{r warning=FALSE}
+    ```{r warning=FALSE, message=FALSE}
     library(fmsb)
     library(dplyr)
 
@@ -244,7 +244,7 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
 
 -   Dieting and BMI
 
-    ```{r warning=FALSE, fig.width=12, fig.height=8}
+    ```{r warning=FALSE, message=FALSE, fig.width=12, fig.height=8}
     library(grid)
     library(vcd)
     library(RColorBrewer)
@@ -265,32 +265,15 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
 
 -   Dietary Preferences
 
-    ```{r warning=FALSE, fig.width=10}
-    library(ggalluvial)
-
-    preference_sub_df <- whq |>
-      group_by(bmi_level_change, more_vege, less_sugar, fewer_carb, less_fat) |>
-      summarise(frequency = n(), .groups = 'drop') |>
-      rename("Freq" = frequency)
-
-    ggplot(preference_sub_df, aes(y = Freq, axis1 = more_vege, axis2 = less_sugar, axis3 = fewer_carb, axis4 = less_fat)) +
-      geom_alluvium(aes(fill = bmi_level_change), width = 1/12) +
-      geom_stratum(width = 1/12) +
-      geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
-      scale_x_discrete(expand = c(0.05, 0.05)) +
-      scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +
-      labs(title = "Alluvium Plot for Dietary Preferences and BMI Change") +
-      annotate("text", x = 1, y = 0, label = "More Vegetables", vjust = 1.5, hjust = 0.5) +
-      annotate("text", x = 2, y = 0, label = "Less Sugar", vjust = 1.5, hjust = 0.5) +
-      annotate("text", x = 3, y = 0, label = "Fewer Carbs", vjust = 1.5, hjust = 0.5) +
-      annotate("text", x = 4, y = 0, label = "Less Fat", vjust = 1.5, hjust = 0.5) +
-      theme(axis.title.x = element_blank()) 
-    ```
-
-```{r warning=FALSE, fig.width=8, fig.height=8}
+```{r warning=FALSE, message=FALSE, fig.width=8, fig.height=8}
+#| warning: false
 library(tidyverse)
 library(dplyr)
 
+preference_sub_df <- whq |>
+  group_by(bmi_level_change, more_vege, less_sugar, fewer_carb, less_fat) |>
+  summarise(frequency = n(), .groups = 'drop') |>
+  rename("Freq" = frequency)
 
 whq_dietary <- preference_sub_df
 
@@ -354,3 +337,35 @@ p <- ggplot(whq_dietary, aes(x=as.factor(id), y=Freq, fill=bmi_level_change)) +
  
 p
 ```
+
+-   Meal and Dietary Combined Impact
+
+    ```{r warning=FALSE, message=FALSE}
+    #| warning: false
+    library(ggalluvial)
+
+    whq_final <- read.csv("data/whq_final.csv")
+
+    whq_final$prev_bmi_level <- factor(whq$prev_bmi_level, 
+                            levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
+    whq_final$curr_bmi_level <- factor(whq$curr_bmi_level, 
+                            levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
+
+    change_final <- whq_final |>
+          group_by(prev_bmi_level, meal_combination, dietary_combination, curr_bmi_level) |>
+          summarise(frequency = n(), .groups = 'drop') |>
+          rename("Freq" = frequency)
+
+    ggplot(change_final, aes(y = Freq, axis1 = prev_bmi_level, axis2 = meal_combination, axis3 = dietary_combination, axis4 = curr_bmi_level)) +
+          geom_alluvium(aes(fill = prev_bmi_level), width = 1/12) +
+          geom_stratum(width = 1/12) +
+          geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+          scale_x_discrete(expand = c(0.05, 0.05)) +
+          scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +
+          labs(title = "BMI Level Change") +
+          annotate("text", x = 1, y = 0, label = "prev_bmi_level", vjust = 1.5, hjust = 0.5) +
+          annotate("text", x = 2, y = 0, label = "meal_combination", vjust = 1.5, hjust = 0.5) +
+          annotate("text", x = 3, y = 0, label = "dietary_combination", vjust = 1.5, hjust = 0.5) +
+          annotate("text", x = 4, y = 0, label = "curr_bmi_level", vjust = 1.5, hjust = 0.5) +
+          theme(axis.title.x = element_blank()) 
+    ```
