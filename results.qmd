@@ -1,12 +1,41 @@
 # Results
 
+```{r warning=FALSE, message=FALSE, include = FALSE}
+library(ggplot2)
+library(dplyr)
+# nrow(whq) # 4503
+```
+
+## Scatterplot with Contour Line - Height vs. Weight by Gender
+
+We utilize a scatter plot with contour lines to view the fundamental characteristics of heights and weights categorized by gender. Prior to creating the plot, extreme values of weights and heights were identified and removed to mitigate the potential influence of outliers on the overall patterns. The comprehensive plot, encompassing all genders, reveals a positive correlation between height and weight. This correlation aligns with our intuitive understanding: as height increases, so does weight.
+
+The density contour lines play a crucial role in illustrating regions of heightened data point concentration. A prominent cluster dominates the plot, indicating that heights tend to concentrate between 60 and 70 inches, while weights concentrate between 100 and 250 pounds. Noteworthy outliers are present on the plot, with a particularly intriguing observation: the majority of outliers are females with heavier weights.
+
+```{r}
+whq1 <- whq |>
+  filter(current_height < 100) |>
+  filter(current_weight < 600)
+
+ggplot(whq1, aes(current_height, current_weight)) +
+  geom_point(alpha = 0.5, aes(color = gender)) +
+  geom_density_2d(alpha = 0.5) +
+  labs(title = "Height vs. Weight by Gender",
+       x = "Current Height",
+       y = "Current Weight")
+```
+
 ## Longitudinal BMI Changes
 
-In order to further know the weight health of the sample, we firstly use the BMI formula given by the CDC to calculate each person's current and previous BMI.
+As we delve deeper into our exploration of health metrics, we turn our attention to Body Mass Index (BMI), a widely used measure that provides insights into the relationship between an individual's weight and height. BMI is a numerical value calculated by dividing an individual's weight in pounds by the square of their height in inches. We use the BMI formula given by CDC to calculate each person's previous and current BMI:
 
--   **Formula: weight (lb) / \[height (in)\]^2^ x 703**
+$$
+\frac{Weight(lb)}{height(in)^2} \cdot 703
+$$
 
-```{r warning=FALSE, message=FALSE}
+We utilize the following BMI categories ranging from underweight to obese in the chart below:
+
+```{r warning=FALSE, message=FALSE, include = FALSE}
 library(dplyr)
 
 # get the bmi
@@ -52,31 +81,6 @@ whq <- whq |>
   filter(previous_weight < 1000)
 
 write.csv(whq, "data/whq.csv", row.names = FALSE)
-```
-
-```{r warning=FALSE, message=FALSE}
-library(ggplot2)
-library(dplyr)
-# nrow(whq) # 4503
-
-```
-
-## Scatterplot with Contour Line - Weight and Height Distribution by Gender
-
-```{r}
-# nrow(whq[whq$current_weight > 600, ]) # 39
-# nrow(whq[whq$current_height > 100, ]) # 48
-
-whq <- whq |>
-  filter(current_height < 100) |>
-  filter(current_weight < 600)
-
-ggplot(whq, aes(current_height, current_weight)) +
-  geom_point(alpha = 0.3) +
-  geom_density_2d() +
-  labs(title = "Scatterplot with Density Contour Lines",
-       x = "Current Height",
-       y = "Current Weight")
 ```
 
 ## Heatmap - Previous BMI vs. Current BMI
@@ -145,7 +149,7 @@ ggplot(whq, aes(x = curr_bmi, y = race, fill = race)) +
   scale_fill_brewer(palette="Set3")
 ```
 
-## Pyramid Chart - Age of the Heavist Weight Distribution by Gender
+## Pyramid Chart - Age of the Heaviest Weight Distribution by Gender
 
 ```{r warning=FALSE, message=FALSE}
 # min(whq$age_heaviest_weight) # 12
