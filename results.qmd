@@ -36,13 +36,13 @@ whq$curr_bmi_level <- factor(whq$curr_bmi_level,
 
 whq$bmi_change <- as.numeric(whq$curr_bmi) - as.numeric(whq$prev_bmi)
 
-# subtracting the factors to see the change
-change_in_BMI_level <- 
-  as.numeric(whq$curr_bmi_level) - as.numeric(whq$prev_bmi_level)
-whq$bmi_level_change <- ifelse(change_in_BMI_level < 0, "lose",
-                             ifelse(change_in_BMI_level > 0, "gain", "maintain"))
+whq$bmi_level_change <- ifelse(whq$bmi_change < 0, "lose",
+                             ifelse(whq$bmi_change > 0, "gain", "maintain"))
 
-write.csv(whq, "data/whq.csv")
+whq$bmi_level_change <- factor(whq$bmi_level_change, 
+                        levels = c('lose', 'maintain', 'gain'))
+
+write.csv(whq, "data/whq.csv", row.names = FALSE)
 ```
 
 ```{r warning=FALSE, message=FALSE}
@@ -51,7 +51,6 @@ library(dplyr)
 # nrow(whq) # 4503
 
 ```
-
 
 ## 1. Hexgon Heatmap - BMI distribution by gender
 
@@ -103,13 +102,25 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
   theme_minimal()
 ```
 
-
-
-
 ## Correlation Analysis Between Factors and BMI Change
 
 -   Dieting and BMI
 
-    ```{r}
+    ```{r warning=FALSE, fig.width=12, fig.height=8}
+    library(grid)
+    library(vcd)
+    library(RColorBrewer)
+
+    # mosaic plot
+    dieting_sub_df <- whq |>
+      group_by(bmi_level_change, eat_less, skip_meal, low_cal) |>
+      summarise(frequency = n(), .groups = 'drop') |>
+      rename("Freq" = frequency)
+
+    mosaic(bmi_level_change ~ eat_less + skip_meal + low_cal, dieting_sub_df , direction = c("v", "v", "h", "h"),
+           highlighting_fill= rev(brewer.pal(3, "RdBu")),
+           rot_labels = 0,
+           margins = c(5, 10, 10, 10),
+           main = "Mosaic plot for Dieting and BMI")
 
     ```
