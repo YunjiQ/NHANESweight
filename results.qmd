@@ -119,7 +119,7 @@ library(ggplot2)
 ggplot(whq, aes(x = curr_bmi, y = race, fill = race)) + 
   geom_violin(trim=FALSE) +
   geom_boxplot(width=0.1, fill="white") +
-  labs(title="BMI Distribution among Race",x="Race", y = "BMI") +
+  labs(title="BMI Distribution among Race",x="BMI", y = "Race") +
   scale_fill_brewer(palette="Set3")
 ```
 
