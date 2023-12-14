@@ -124,3 +124,30 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
            main = "Mosaic plot for Dieting and BMI")
 
     ```
+
+```{=html}
+<!-- -->
+```
+-   Dietary Preferences
+
+    ```{r warning=FALSE, fig.width=10}
+    library(ggalluvial)
+
+    preference_sub_df <- whq |>
+      group_by(bmi_level_change, more_vege, less_sugar, fewer_carb, less_fat) |>
+      summarise(frequency = n(), .groups = 'drop') |>
+      rename("Freq" = frequency)
+
+    ggplot(preference_sub_df, aes(y = Freq, axis1 = more_vege, axis2 = less_sugar, axis3 = fewer_carb, axis4 = less_fat)) +
+      geom_alluvium(aes(fill = bmi_level_change), width = 1/12) +
+      geom_stratum(width = 1/12) +
+      geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+      scale_x_discrete(expand = c(0.05, 0.05)) +
+      scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +
+      labs(title = "Alluvium Plot for Dietary Preferences and BMI Change") +
+      annotate("text", x = 1, y = 0, label = "More Vegetables", vjust = 1.5, hjust = 0.5) +
+      annotate("text", x = 2, y = 0, label = "Less Sugar", vjust = 1.5, hjust = 0.5) +
+      annotate("text", x = 3, y = 0, label = "Fewer Carbs", vjust = 1.5, hjust = 0.5) +
+      annotate("text", x = 4, y = 0, label = "Less Fat", vjust = 1.5, hjust = 0.5) +
+      theme(axis.title.x = element_blank()) 
+    ```
