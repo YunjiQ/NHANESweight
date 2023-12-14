@@ -91,5 +91,5 @@ whq_handle_missing <- raw_whq |>
 after <- missing_data.frame(whq_handle_missing)
 image(after)
 
-write.csv(whq_handle_missing, "data/whq_handle_missing.csv")
+write.csv(whq_handle_missing, "data/whq_handle_missing.csv", row.names = FALSE)
 ```
