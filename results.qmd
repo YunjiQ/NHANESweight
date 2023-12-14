@@ -85,19 +85,40 @@ write.csv(whq, "data/whq.csv", row.names = FALSE)
 
 ## Heatmap - Previous BMI vs. Current BMI
 
+Based on the BMI we calculated, we use a heatmap to take a look at the overall counts for both previous BMI and current BMI. The diagonal trend observed from the bottom left to the top right suggests that many individuals have remained within a similar BMI category. The lighter squares along the diagonal implies a consistency in BMI over time for a substantial number of participants. However, there are also some lighter squares off the diagonal, indicating that there have been changes in BMI for some individuals either towards the higher or lower end.
+
+The heatmap also shows a concentrated cluster of values within the BMI range of 20 to 30. To better take a look at the current BMI level of each clusters, we add overlaid points onto the heatmap, color-coded based on the current BMI level. The resulting visualization vividly illustrates that the majority of individuals within this BMI range are classified as overweight, and there do has a large amount of people are classified as health weight and obese.
+
 ```{r}
-ggplot(whq, aes(prev_bmi, curr_bmi)) +
-  geom_bin2d(binwidth = c(5, 5)) + 
-  ggtitle("Previous BMI vs. Current BMI")
+ggplot(whq1, aes(prev_bmi, curr_bmi)) +
+  geom_hex(binwidth = c(5, 5)) + 
+  scale_fill_gradient(low = "lightblue", high = "darkblue") +  
+  labs(title = "Previous BMI vs. Current BMI",
+       x = "Previous BMI",
+       y = "Current BMI")
+```
+
+```{r}
+ggplot(whq1, aes(prev_bmi, curr_bmi)) +
+  geom_hex(binwidth = c(5, 5)) + 
+  scale_fill_gradient(low = "lightblue", high = "darkblue") + 
+  geom_point(aes(color = curr_bmi_level), alpha = 0.5) +
+  labs(title = "Previous BMI vs. Current BMI with BMI Level",
+       x = "Previous BMI",
+       y = "Current BMI")
 ```
 
 ## Alluvial - BMI Level Change
+
+To see the dynamics of BMI level changes over time, we employed an alluvial plot to see the transitions between different BMI categories from the previous year to the current year. As the graph shows, a substantial amount of individuals have maintained a consistent BMI level, with a notable concentration in obese category. 
+
+In instances of BMI level changes, the most prominent transition is observed in individuals moving from the obese level to overweight. A smaller yet noteworthy group has significant weight loss, transitioning from obese to healthy weight. And there also have some individuals transition from overweight to a healthy weight, reflecting positive changes in lifestyle and weight management strategies. Conversely, there are instances where individuals have moved from healthier BMI level to overweight or obese.
 
 ```{r}
 #| warning: false
 library(ggalluvial)
 
-change <- whq |>
+change <- whq1 |>
       group_by(prev_bmi_level, curr_bmi_level) |>
       summarise(frequency = n(), .groups = 'drop') |>
       rename("Freq" = frequency)
@@ -105,7 +126,7 @@ change <- whq |>
 ggplot(change, aes(y = Freq, axis1 = prev_bmi_level, axis2 = curr_bmi_level)) +
       geom_alluvium(aes(fill = prev_bmi_level), width = 1/12) +
       geom_stratum(width = 1/12) +
-      geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+      geom_label(stat = "stratum", aes(label = paste(after_stat(stratum), "\n", after_stat(count))), size = 2.5) +
       scale_x_discrete(expand = c(0.05, 0.05)) +
       scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +
       labs(title = "BMI Level Change") +
