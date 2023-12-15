@@ -3,10 +3,76 @@
 <style>
   * {
     font-family: sans-serif;
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+    #input-container {
+      margin-bottom: 20px;
+    }
+
+    #bmi-chart-container {
+      position: relative;
+      width: 600px;
+      height: 100px
+      margin-bottom: 20px;
+    }
+    #bmi-indicator {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      line-height: 30px;
+      background-color: grey;
+      left: 0;
+      transform: translate(-50%, 30px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      font-weight: bold; 
+      font-size: 14px;
+}
+    }
+
+    .bmi-label {
+      position: absolute;
+      bottom: 0px;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+    
+    input[type="number"], button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 1em;
+    }
+    
+    button {
+      cursor: pointer;
+    }
   }
 </style> 
 
 <div id="plot">
+</div>
+
+<h4>BMI Calculator</h4>
+<input type="number" id="weight" placeholder="Weight (lb)">
+<input type="number" id="height" placeholder="Height (in)">
+<button onclick="updateBMI()">Calculate BMI</button>
+
+<svg id="bmi-chart"></svg>
+<div id="bmi-indicator"></div>
+
+<div id="bmi-chart-container">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
