@@ -39,6 +39,13 @@ $$
 
 We utilize the following BMI categories ranging from underweight to obese in the chart below:
 
+| BMI            | Weight Status  |
+|----------------|----------------|
+| Below 18.5     | Underweight    |
+| 18.5 - 24.99   | Healthy Weight |
+| 25.0 - 29.99   | Overweight     |
+| 30.0 and above | Obesity        |
+
 ```{r warning=FALSE, message=FALSE, include = FALSE}
 whq$prev_bmi <- round((whq$previous_weight / (whq$current_height^2)) * 703, 2)
 whq$curr_bmi <- round((whq$current_weight / (whq$current_height^2)) * 703, 2)
@@ -167,7 +174,7 @@ ggplot(whq, aes(x = curr_bmi_level, fill = curr_bmi_level)) +
 
 ## Violin Plot - BMI Distribution by Race
 
-We use a violin plot to provide a visual comparison of BMI distributions across the race groups. Some races, such as non-Hispanic Black and other Race, show a wider distribution of BMI, indicating more variability within these groups. Conversely, others groups have a narrower distribution, suggesting more uniform BMI values. 
+We use a violin plot to provide a visual comparison of BMI distributions across the race groups. Some races, such as non-Hispanic Black and other Race, show a wider distribution of BMI, indicating more variability within these groups. Conversely, others groups have a narrower distribution, suggesting more uniform BMI values.
 
 The median BMI values vary by group, with non-Hispanic Black shows a higher median and non-Hispanic Asian shows a comparatively smaller median. Additionally, the plot reveals a prevalent right skewed trend with longer tail towards higher BMI values in most groups. Notably, Non-Hispanic Asian is more closely resembling normality, showcasing a balanced and symmetric BMI profile. The existence of outliers within each group further emphasizes the diversity of BMI values.
 
@@ -214,60 +221,60 @@ The radar chart provides a multi-faceted into the dietary intention and behavior
 
 The chart shows that for most dietary factors, the intention to engage in a specific behavior is higher than the actual behavior itself. Less than half of the people who have intention to lose weight actually behavior on it. The greatest discrepancy between intention and behavior appears in 'eat less' and 'more vege'. And more people behavior on lossing weight by 'eat less', 'more vege', and 'less suger'
 
-    ```{r warning=FALSE, message=FALSE}
-    library(fmsb)
-    library(dplyr)
+```{{r warning=FALSE, message=FALSE}}
+library(fmsb)
+library(dplyr)
 
-    whq_intent <- sapply(subset(whq, change_intentional == TRUE & change_behavior == FALSE,
-    select=eat_less:less_fat),as.logical)
+whq_intent <- sapply(subset(whq, change_intentional == TRUE & change_behavior == FALSE,
+select=eat_less:less_fat),as.logical)
 
-    whq_behavior <- sapply(subset(whq, change_intentional == FALSE & change_behavior == TRUE,
-    select=eat_less:less_fat), as.logical)
-      
-    whq_intent_counts <- colSums(whq_intent)
-    whq_intent_df <- t(as.data.frame(whq_intent_counts))
-    whq_behavior_counts <- colSums(whq_behavior)
-    whq_behavior_df <- t(as.data.frame(whq_behavior_counts))
-     
-    whq_int_beh <- as.data.frame(rbind(rep(2000,1800) , rep(200,400), whq_intent_df, whq_behavior_df))
-     
-    radarchart(whq_int_beh,
-               axistype = 1, 
-               pcol = c("lightblue", "orange"),
-               plwd = 2, 
-               cglcol="grey", cglty=1, axislabcol="grey", cglwd=0.8,
-               vlcex = 1 )
+whq_behavior <- sapply(subset(whq, change_intentional == FALSE & change_behavior == TRUE,
+select=eat_less:less_fat), as.logical)
+  
+whq_intent_counts <- colSums(whq_intent)
+whq_intent_df <- t(as.data.frame(whq_intent_counts))
+whq_behavior_counts <- colSums(whq_behavior)
+whq_behavior_df <- t(as.data.frame(whq_behavior_counts))
+ 
+whq_int_beh <- as.data.frame(rbind(rep(2000,1800) , rep(200,400), whq_intent_df, whq_behavior_df))
+ 
+radarchart(whq_int_beh,
+           axistype = 1, 
+           pcol = c("lightblue", "orange"),
+           plwd = 2, 
+           cglcol="grey", cglty=1, axislabcol="grey", cglwd=0.8,
+           vlcex = 1 )
 
-    legend("right",
-           legend = c("Intention", "Behavior"), 
-           col = c("lightblue", "orange"),
-           lty = 1, lwd = 2,
-           pch = c(10, 10),
-           pt.cex = 1,
-           cex = 0.8) 
+legend("right",
+       legend = c("Intention", "Behavior"), 
+       col = c("lightblue", "orange"),
+       lty = 1, lwd = 2,
+       pch = c(10, 10),
+       pt.cex = 1,
+       cex = 0.8) 
 
-    ```
+```
 
 ### Mosaic Plot - Dieting and BMI
 
-    ```{r warning=FALSE, message=FALSE, fig.width=12, fig.height=8}
-    library(grid)
-    library(vcd)
-    library(RColorBrewer)
+```{{r warning=FALSE, message=FALSE, fig.width=12, fig.height=8}}
+library(grid)
+library(vcd)
+library(RColorBrewer)
 
-    # mosaic plot
-    dieting_sub_df <- whq |>
-      group_by(bmi_level_change, eat_less, skip_meal, low_cal) |>
-      summarise(frequency = n(), .groups = 'drop') |>
-      rename("Freq" = frequency)
+# mosaic plot
+dieting_sub_df <- whq |>
+  group_by(bmi_level_change, eat_less, skip_meal, low_cal) |>
+  summarise(frequency = n(), .groups = 'drop') |>
+  rename("Freq" = frequency)
 
-    mosaic(bmi_level_change ~ eat_less + skip_meal + low_cal, dieting_sub_df , direction = c("v", "v", "h", "h"),
-           highlighting_fill= rev(brewer.pal(3, "RdBu")),
-           rot_labels = 0,
-           margins = c(5, 10, 10, 10),
-           main = "Mosaic plot for Dieting and BMI")
+mosaic(bmi_level_change ~ eat_less + skip_meal + low_cal, dieting_sub_df , direction = c("v", "v", "h", "h"),
+       highlighting_fill= rev(brewer.pal(3, "RdBu")),
+       rot_labels = 0,
+       margins = c(5, 10, 10, 10),
+       main = "Mosaic plot for Dieting and BMI")
 
-    ```
+```
 
 -   Dietary Preferences
 
