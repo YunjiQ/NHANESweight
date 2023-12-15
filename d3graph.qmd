@@ -58,11 +58,22 @@
     button {
       cursor: pointer;
     }
+    
+    #question {
+      text-align: center;
+      margin: 30px;
+    }
+
+    #question label {
+      margin-right: 10px;
+    }
+
+    #question input {
+      margin-right: 5px;
+    }
+    
   }
 </style> 
-
-<div id="plot">
-</div>
 
 <h4>BMI Calculator</h4>
 <input type="number" id="weight" placeholder="Weight (lb)">
@@ -73,6 +84,22 @@
 <div id="bmi-indicator"></div>
 
 <div id="bmi-chart-container">
+</div>
+
+<div id="question">
+  <p>Any weight loss expectation for the next year?</p>
+  <form>
+    <label>
+      <input type="radio" name="weight-goal" value="lose"> Lose weight
+    </label>
+    <label>
+      <input type="radio" name="weight-goal" value="maintain"> Maintain weight
+    </label>
+  </form>
+  <p>See the top 3 successful dietary choices! The bar length represents the number of people.</p>
+</div>
+
+<div id="plot">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>

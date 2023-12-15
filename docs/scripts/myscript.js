@@ -77,3 +77,61 @@ categories.forEach(function(category, index) {
       .text(category.max);
   }
 });
+
+
+
+const bardata_lose = [
+  { value: 225, text: "more vege, less sugar, low carbs, less fat" },
+  { value: 179, text: "more vege, less sugar" },
+  { value: 176, text: "more vege" }
+];
+const bardata_maintain = [
+  { value: 213, text: "no preference"},
+  { value: 107, text: "more vege" },
+  { value: 79, text: "more vege, less sugar"}
+];
+
+
+const bar_svg = d3.select("div#plot")
+  .append("svg")
+  .attr("width", 700)
+  .attr("height", 150);
+
+function updateBarChart(data, color) {
+  bar_svg.selectAll("rect").remove();
+  bar_svg.selectAll("text").remove();
+
+  const bars = bar_svg.selectAll("rect")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("x", 250)
+    .attr("y", (d, i) => i * 25 + 10)
+    .attr("width", d => d.value)
+    .attr("height", 20)
+    .attr("fill", color);
+
+  const texts = bar_svg.selectAll("text")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("x", 255)
+    .attr("y", (d, i) => i * 25 + 25)
+    .text(d => d.text)
+    .attr("fill", "black")
+    .attr("font-size", "12px");
+}
+
+
+d3.select("div#question").selectAll("input")
+  .on("click", function(d) {
+    const value = d3.select(this).property("value");
+    if (value === "lose") {
+      updateBarChart(bardata_lose, "lightblue");
+    } else if (value === "maintain") {
+      updateBarChart(bardata_maintain, "lightgreen");
+    }
+  });
+
+
+
