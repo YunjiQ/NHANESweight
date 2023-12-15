@@ -179,13 +179,11 @@ ggplot(whq, aes(x = curr_bmi, y = race, fill = race)) +
   scale_fill_brewer(palette="Set3")
 ```
 
-## Pyramid Chart - Age of the Heaviest Weight Distribution by Gender
+## Pyramid Chart - Age Distribution of the Heaviest Weight by Gender
+
+This chart counts the age of heaviest weight by gender and segmented into distinct age groups, showing some noteworthy patterns in weight reporting trends. For most age groups, females reported their heaviest weight in higher numbers compared to males. But in our dataset, the total number of male and female are different. The age groups of 21-30 and 31-40 stand out with the highest counts of reported heaviest weight for both genders. This suggests that these age ranges are critical periods where individuals are most likely to gain a heaviest weight. The counts generally decrease for both genders as age increases, particularly beyond the age of 60.
 
 ```{r warning=FALSE, message=FALSE}
-# min(whq$age_heaviest_weight) # 12
-# max(whq$age_heaviest_weight) # 99999
-# nrow(whq[whq$age_heaviest_weight > 80, ]) # 21  
-
 whq$age_group <- cut(whq$age_heaviest_weight,
                      breaks = c(10, 20, 30, 40, 50, 60, 70, 80),
                      labels = c("11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80"),
@@ -201,7 +199,7 @@ plot_data$count[plot_data$gender == "female"] <- -plot_data$count[plot_data$gend
 ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
   geom_bar(stat = "identity", position = "identity", color = "black", alpha = 0.7) +
   geom_text(aes(label = abs(count), hjust = ifelse(count < 0, 1.1, -0.1)), color = "black", size = 3) +
-  labs(title = "Age Distribution by Gender",
+  labs(title = " Age of the Heaviest Weight Distribution by Gender",
        x = "Position",
        y = "Count") +
   scale_x_continuous(labels = abs) + 
@@ -210,7 +208,11 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
 
 ## Correlation Analysis Between Factors and BMI Change
 
--   Weight Loss Intentions & Behavior
+### Radar Chart - Weight Loss Intentions & Behavior by Loss Weight Methods
+
+The radar chart provides a multi-faceted into the dietary intention and behaviors of individuals across various factors. The axes radiating from the center represent different dietary factors including 'eat less,' 'less fat,' 'fewer carbs,' 'less sugar,' 'more vegetables,' 'low calories,' and 'skipping meals'. Each axis is scored from 0 to 100%, indicating the percentage of individuals who either intend to or actually engage in the behavior associated with each factor.
+
+The chart shows that for most dietary factors, the intention to engage in a specific behavior is higher than the actual behavior itself. Less than half of the people who have intention to lose weight actually behavior on it. The greatest discrepancy between intention and behavior appears in 'eat less' and 'more vege'. And more people behavior on lossing weight by 'eat less', 'more vege', and 'less suger'
 
     ```{r warning=FALSE, message=FALSE}
     library(fmsb)
@@ -246,7 +248,7 @@ ggplot(plot_data, aes(x = count, y = age_group, fill = gender)) +
 
     ```
 
--   Dieting and BMI
+### Mosaic Plot - Dieting and BMI
 
     ```{r warning=FALSE, message=FALSE, fig.width=12, fig.height=8}
     library(grid)

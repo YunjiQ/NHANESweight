@@ -183,8 +183,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#alluvial---bmi-level-change" id="toc-alluvial---bmi-level-change" class="nav-link" data-scroll-target="#alluvial---bmi-level-change"><span class="header-section-number">3.4</span> Alluvial - BMI Level Change</a></li>
   <li><a href="#grouped-bar-chart---current-bmi-by-age" id="toc-grouped-bar-chart---current-bmi-by-age" class="nav-link" data-scroll-target="#grouped-bar-chart---current-bmi-by-age"><span class="header-section-number">3.5</span> Grouped Bar Chart - Current BMI by Age</a></li>
   <li><a href="#violin-plot---bmi-distribution-by-race" id="toc-violin-plot---bmi-distribution-by-race" class="nav-link" data-scroll-target="#violin-plot---bmi-distribution-by-race"><span class="header-section-number">3.6</span> Violin Plot - BMI Distribution by Race</a></li>
-  <li><a href="#pyramid-chart---age-of-the-heaviest-weight-distribution-by-gender" id="toc-pyramid-chart---age-of-the-heaviest-weight-distribution-by-gender" class="nav-link" data-scroll-target="#pyramid-chart---age-of-the-heaviest-weight-distribution-by-gender"><span class="header-section-number">3.7</span> Pyramid Chart - Age of the Heaviest Weight Distribution by Gender</a></li>
-  <li><a href="#correlation-analysis-between-factors-and-bmi-change" id="toc-correlation-analysis-between-factors-and-bmi-change" class="nav-link" data-scroll-target="#correlation-analysis-between-factors-and-bmi-change"><span class="header-section-number">3.8</span> Correlation Analysis Between Factors and BMI Change</a></li>
+  <li><a href="#pyramid-chart---age-distribution-of-the-heaviest-weight-by-gender" id="toc-pyramid-chart---age-distribution-of-the-heaviest-weight-by-gender" class="nav-link" data-scroll-target="#pyramid-chart---age-distribution-of-the-heaviest-weight-by-gender"><span class="header-section-number">3.7</span> Pyramid Chart - Age Distribution of the Heaviest Weight by Gender</a></li>
+  <li><a href="#correlation-analysis-between-factors-and-bmi-change" id="toc-correlation-analysis-between-factors-and-bmi-change" class="nav-link" data-scroll-target="#correlation-analysis-between-factors-and-bmi-change"><span class="header-section-number">3.8</span> Correlation Analysis Between Factors and BMI Change</a>
+  <ul class="collapse">
+  <li><a href="#radar-chart---weight-loss-intentions-behavior-by-loss-weight-methods" id="toc-radar-chart---weight-loss-intentions-behavior-by-loss-weight-methods" class="nav-link" data-scroll-target="#radar-chart---weight-loss-intentions-behavior-by-loss-weight-methods"><span class="header-section-number">3.8.1</span> Radar Chart - Weight Loss Intentions &amp; Behavior by Loss Weight Methods</a></li>
+  <li><a href="#mosaic-plot---dieting-and-bmi" id="toc-mosaic-plot---dieting-and-bmi" class="nav-link" data-scroll-target="#mosaic-plot---dieting-and-bmi"><span class="header-section-number">3.8.2</span> Mosaic Plot - Dieting and BMI</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YunjiQ/NHANESweight/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/YunjiQ/NHANESweight/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -350,35 +354,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="pyramid-chart---age-of-the-heaviest-weight-distribution-by-gender" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="pyramid-chart---age-of-the-heaviest-weight-distribution-by-gender"><span class="header-section-number">3.7</span> Pyramid Chart - Age of the Heaviest Weight Distribution by Gender</h2>
+<section id="pyramid-chart---age-distribution-of-the-heaviest-weight-by-gender" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="pyramid-chart---age-distribution-of-the-heaviest-weight-by-gender"><span class="header-section-number">3.7</span> Pyramid Chart - Age Distribution of the Heaviest Weight by Gender</h2>
+<p>This chart counts the age of heaviest weight by gender and segmented into distinct age groups, showing some noteworthy patterns in weight reporting trends. For most age groups, females reported their heaviest weight in higher numbers compared to males. But in our dataset, the total number of male and female are different. The age groups of 21-30 and 31-40 stand out with the highest counts of reported heaviest weight for both genders. This suggests that these age ranges are critical periods where individuals are most likely to gain a heaviest weight. The counts generally decrease for both genders as age increases, particularly beyond the age of 60.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># min(whq$age_heaviest_weight) # 12</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># max(whq$age_heaviest_weight) # 99999</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># nrow(whq[whq$age_heaviest_weight &gt; 80, ]) # 21  </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>age_group <span class="ot">&lt;-</span> <span class="fu">cut</span>(whq<span class="sc">$</span>age_heaviest_weight,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"11-20"</span>, <span class="st">"21-30"</span>, <span class="st">"31-40"</span>, <span class="st">"41-50"</span>, <span class="st">"51-60"</span>, <span class="st">"61-70"</span>, <span class="st">"71-80"</span>),</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> whq <span class="sc">%&gt;%</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age_group, gender) <span class="sc">%&gt;%</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plot_data<span class="sc">$</span>count[plot_data<span class="sc">$</span>gender <span class="sc">==</span> <span class="st">"female"</span>] <span class="ot">&lt;-</span> <span class="sc">-</span>plot_data<span class="sc">$</span>count[plot_data<span class="sc">$</span>gender <span class="sc">==</span> <span class="st">"female"</span>]</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> count, <span class="at">y =</span> age_group, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">abs</span>(count), <span class="at">hjust =</span> <span class="fu">ifelse</span>(count <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="fl">1.1</span>, <span class="sc">-</span><span class="fl">0.1</span>)), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age Distribution by Gender"</span>,</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Position"</span>,</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> abs) <span class="sc">+</span> </span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>whq<span class="sc">$</span>age_group <span class="ot">&lt;-</span> <span class="fu">cut</span>(whq<span class="sc">$</span>age_heaviest_weight,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"11-20"</span>, <span class="st">"21-30"</span>, <span class="st">"31-40"</span>, <span class="st">"41-50"</span>, <span class="st">"51-60"</span>, <span class="st">"61-70"</span>, <span class="st">"71-80"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> whq <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age_group, gender) <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plot_data<span class="sc">$</span>count[plot_data<span class="sc">$</span>gender <span class="sc">==</span> <span class="st">"female"</span>] <span class="ot">&lt;-</span> <span class="sc">-</span>plot_data<span class="sc">$</span>count[plot_data<span class="sc">$</span>gender <span class="sc">==</span> <span class="st">"female"</span>]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> count, <span class="at">y =</span> age_group, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">abs</span>(count), <span class="at">hjust =</span> <span class="fu">ifelse</span>(count <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="fl">1.1</span>, <span class="sc">-</span><span class="fl">0.1</span>)), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">" Age of the Heaviest Weight Distribution by Gender"</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Position"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> abs) <span class="sc">+</span> </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
@@ -387,71 +388,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="correlation-analysis-between-factors-and-bmi-change" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="correlation-analysis-between-factors-and-bmi-change"><span class="header-section-number">3.8</span> Correlation Analysis Between Factors and BMI Change</h2>
+<section id="radar-chart---weight-loss-intentions-behavior-by-loss-weight-methods" class="level3" data-number="3.8.1">
+<h3 data-number="3.8.1" class="anchored" data-anchor-id="radar-chart---weight-loss-intentions-behavior-by-loss-weight-methods"><span class="header-section-number">3.8.1</span> Radar Chart - Weight Loss Intentions &amp; Behavior by Loss Weight Methods</h3>
+<p>The radar chart provides a multi-faceted into the dietary intention and behaviors of individuals across various factors. The axes radiating from the center represent different dietary factors including ‘eat less,’ ‘less fat,’ ‘fewer carbs,’ ‘less sugar,’ ‘more vegetables,’ ‘low calories,’ and ‘skipping meals’. Each axis is scored from 0 to 100%, indicating the percentage of individuals who either intend to or actually engage in the behavior associated with each factor.</p>
+<p>The chart shows that for most dietary factors, the intention to engage in a specific behavior is higher than the actual behavior itself. Less than half of the people who have intention to lose weight actually behavior on it. The greatest discrepancy between intention and behavior appears in ‘eat less’ and ‘more vege’. And more people behavior on lossing weight by ‘eat less’, ‘more vege’, and ‘less suger’</p>
+<pre><code>::: {.cell}
+
+```{.r .cell-code}
+library(fmsb)
+library(dplyr)
+
+whq_intent &lt;- sapply(subset(whq, change_intentional == TRUE &amp; change_behavior == FALSE,
+select=eat_less:less_fat),as.logical)
+
+whq_behavior &lt;- sapply(subset(whq, change_intentional == FALSE &amp; change_behavior == TRUE,
+select=eat_less:less_fat), as.logical)
+  
+whq_intent_counts &lt;- colSums(whq_intent)
+whq_intent_df &lt;- t(as.data.frame(whq_intent_counts))
+whq_behavior_counts &lt;- colSums(whq_behavior)
+whq_behavior_df &lt;- t(as.data.frame(whq_behavior_counts))
+ 
+whq_int_beh &lt;- as.data.frame(rbind(rep(2000,1800) , rep(200,400), whq_intent_df, whq_behavior_df))
+ 
+radarchart(whq_int_beh,
+           axistype = 1, 
+           pcol = c("lightblue", "orange"),
+           plwd = 2, 
+           cglcol="grey", cglty=1, axislabcol="grey", cglwd=0.8,
+           vlcex = 1 )
+
+legend("right",
+       legend = c("Intention", "Behavior"), 
+       col = c("lightblue", "orange"),
+       lty = 1, lwd = 2,
+       pch = c(10, 10),
+       pt.cex = 1,
+       cex = 0.8) 
+```
+
+::: {.cell-output-display}
+![](results_files/figure-html/unnamed-chunk-11-1.png){width=672}
+:::
+:::</code></pre>
+</section>
+<section id="mosaic-plot---dieting-and-bmi" class="level3" data-number="3.8.2">
+<h3 data-number="3.8.2" class="anchored" data-anchor-id="mosaic-plot---dieting-and-bmi"><span class="header-section-number">3.8.2</span> Mosaic Plot - Dieting and BMI</h3>
+<pre><code>::: {.cell}
+
+```{.r .cell-code}
+library(grid)
+library(vcd)
+library(RColorBrewer)
+
+# mosaic plot
+dieting_sub_df &lt;- whq |&gt;
+  group_by(bmi_level_change, eat_less, skip_meal, low_cal) |&gt;
+  summarise(frequency = n(), .groups = 'drop') |&gt;
+  rename("Freq" = frequency)
+
+mosaic(bmi_level_change ~ eat_less + skip_meal + low_cal, dieting_sub_df , direction = c("v", "v", "h", "h"),
+       highlighting_fill= rev(brewer.pal(3, "RdBu")),
+       rot_labels = 0,
+       margins = c(5, 10, 10, 10),
+       main = "Mosaic plot for Dieting and BMI")
+```
+
+::: {.cell-output-display}
+![](results_files/figure-html/unnamed-chunk-12-1.png){width=1152}
+:::
+:::</code></pre>
 <ul>
-<li><p>Weight Loss Intentions &amp; Behavior</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fmsb)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>whq_intent <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">subset</span>(whq, change_intentional <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> change_behavior <span class="sc">==</span> <span class="cn">FALSE</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">select=</span>eat_less<span class="sc">:</span>less_fat),as.logical)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>whq_behavior <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">subset</span>(whq, change_intentional <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">&amp;</span> change_behavior <span class="sc">==</span> <span class="cn">TRUE</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">select=</span>eat_less<span class="sc">:</span>less_fat), as.logical)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>whq_intent_counts <span class="ot">&lt;-</span> <span class="fu">colSums</span>(whq_intent)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>whq_intent_df <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.data.frame</span>(whq_intent_counts))</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>whq_behavior_counts <span class="ot">&lt;-</span> <span class="fu">colSums</span>(whq_behavior)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>whq_behavior_df <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">as.data.frame</span>(whq_behavior_counts))</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>whq_int_beh <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(<span class="fu">rep</span>(<span class="dv">2000</span>,<span class="dv">1800</span>) , <span class="fu">rep</span>(<span class="dv">200</span>,<span class="dv">400</span>), whq_intent_df, whq_behavior_df))</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">radarchart</span>(whq_int_beh,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">axistype =</span> <span class="dv">1</span>, </span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">pcol =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"orange"</span>),</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">plwd =</span> <span class="dv">2</span>, </span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">cglcol=</span><span class="st">"grey"</span>, <span class="at">cglty=</span><span class="dv">1</span>, <span class="at">axislabcol=</span><span class="st">"grey"</span>, <span class="at">cglwd=</span><span class="fl">0.8</span>,</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">vlcex =</span> <span class="dv">1</span> )</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"right"</span>,</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Intention"</span>, <span class="st">"Behavior"</span>), </span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"orange"</span>),</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>),</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex =</span> <span class="dv">1</span>,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.8</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
-</div>
-</div></li>
-<li><p>Dieting and BMI</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># mosaic plot</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>dieting_sub_df <span class="ot">&lt;-</span> whq <span class="sc">|&gt;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bmi_level_change, eat_less, skip_meal, low_cal) <span class="sc">|&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">frequency =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Freq"</span> <span class="ot">=</span> frequency)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaic</span>(bmi_level_change <span class="sc">~</span> eat_less <span class="sc">+</span> skip_meal <span class="sc">+</span> low_cal, dieting_sub_df , <span class="at">direction =</span> <span class="fu">c</span>(<span class="st">"v"</span>, <span class="st">"v"</span>, <span class="st">"h"</span>, <span class="st">"h"</span>),</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">highlighting_fill=</span> <span class="fu">rev</span>(<span class="fu">brewer.pal</span>(<span class="dv">3</span>, <span class="st">"RdBu"</span>)),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">rot_labels =</span> <span class="dv">0</span>,</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>),</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="st">"Mosaic plot for Dieting and BMI"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="1152"></p>
-</div>
-</div></li>
-<li><p>Dietary Preferences</p></li>
+<li>Dietary Preferences</li>
 </ul>
 <div class="cell">
 <details>
@@ -569,6 +577,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
