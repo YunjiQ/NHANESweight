@@ -367,7 +367,7 @@ p
           geom_stratum(width = 1/12) +
           geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
           scale_x_discrete(expand = c(0.05, 0.05)) +
-          scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +h
+          scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +
           labs(title = "BMI Level Change") +
           annotate("text", x = 1, y = 0, label = "prev_bmi_level", vjust = 1.5, hjust = 0.5) +
           annotate("text", x = 2, y = 0, label = "meal_combination", vjust = 1.5, hjust = 0.5) +
