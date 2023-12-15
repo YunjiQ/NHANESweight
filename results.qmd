@@ -221,7 +221,7 @@ The radar chart provides a multi-faceted into the dietary intention and behavior
 
 The chart shows that for most dietary factors, the intention to engage in a specific behavior is higher than the actual behavior itself. Less than half of the people who have intention to lose weight actually behavior on it. The greatest discrepancy between intention and behavior appears in 'eat less' and 'more vege'. And more people behavior on lossing weight by 'eat less', 'more vege', and 'less suger'
 
-```{{r warning=FALSE, message=FALSE}}
+```{r warning=FALSE, message=FALSE}
 library(fmsb)
 library(dplyr)
 
@@ -252,12 +252,19 @@ legend("right",
        pch = c(10, 10),
        pt.cex = 1,
        cex = 0.8) 
-
 ```
 
 ### Mosaic Plot - Dieting and BMI
 
-```{{r warning=FALSE, message=FALSE, fig.width=12, fig.height=8}}
+The mosaic plot is divided into sections that represent combinations of whether individuals engage in dieting behaviors: eat less, low calories, skip meal. Different shades indicating BMI change on whether the dieting behavior works are separated to three results: 'lose', 'maintain', or 'gain'.
+
+The size of each section represents the proportion of individuals within each category of dieting behavior and BMI change. For individuals who do eat less (eat_less = TRUE), there appears to be a greater proportion of weight loss, particularly among those who also engage in a low-calorie diet. From the graph, we can conclude that the top three combinations to lose weight are:
+
+1.  eat less (eat_less = True, low_cal = False, skip_meak = False)
+2.  eat less and low cal (eat_less = True, low_cal = True, skip_meak = False)
+3.  no preference (eat_less = False, low_cal = False, skip_meak = False)
+
+```{r warning=FALSE, message=FALSE, fig.width=12, fig.height=8}
 library(grid)
 library(vcd)
 library(RColorBrewer)
@@ -276,7 +283,19 @@ mosaic(bmi_level_change ~ eat_less + skip_meal + low_cal, dieting_sub_df , direc
 
 ```
 
--   Dietary Preferences
+### Dietary Preferences
+
+The chart is divided into three sectors, each representing a category of weight change: 'gain', 'maintain', and 'lose'. Each sector contains radial bars whose lengths are proportional to a specific value, which appears to be associated with different dietary preferences or factors. The 'gain' sector is in blue, 'maintain' in green, and 'lose' in red, each with numbered labels on the bars which corresponding to specific dietary preferences or behaviors as the table below:
+
+![](images/WechatIMG2203.jpg){fig-align="center"}
+
+The red 'lose' sector has bars of varying lengths, suggesting different levels of association between the numbered factors and weight loss. The 'maintain' and 'gain' sectors also show variability in bar lengths, which implies that certain dietary preferences are more commonly associated with maintaining or gaining weight.
+
+In our analysis, we want to focus more on the weight loss. We can compare between the impact of various dietary factors on weight change based on the length of the bars. As a result, from the plot, we can conclude that the top three combinations to lose weight are:
+
+1.  id 16 - More Vegetable, Less Sugar, Fewer Carbs, Less Fat
+2.  id 13 - More Vegetable, Less Sugar
+3.  id 9 - More Vegetable
 
 ```{r warning=FALSE, message=FALSE, fig.width=8, fig.height=8}
 #| warning: false
