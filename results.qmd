@@ -283,7 +283,7 @@ mosaic(bmi_level_change ~ eat_less + skip_meal + low_cal, dieting_sub_df , direc
 
 ```
 
-### Dietary Preferences
+### Circular Barplot - Dietary Preferences
 
 The chart is divided into three sectors, each representing a category of weight change: 'gain', 'maintain', and 'lose'. Each sector contains radial bars whose lengths are proportional to a specific value, which appears to be associated with different dietary preferences or factors. The 'gain' sector is in blue, 'maintain' in green, and 'lose' in red, each with numbered labels on the bars which corresponding to specific dietary preferences or behaviors as the table below:
 
@@ -370,34 +370,45 @@ p <- ggplot(whq_dietary, aes(x=as.factor(id), y=Freq, fill=bmi_level_change)) +
 p
 ```
 
--   Meal and Dietary Combined Impact
+### Alluvial - Dietary Combined Impact on BMI Level
 
-    ```{r warning=FALSE, message=FALSE}
-    #| warning: false
-    library(ggalluvial)
+Based on the previous analysis, we extract the combinations of id 16 (More Vegetable, Less Sugar, Fewer Carbs, Less Fat), id 13 (More Vegetable, Less Sugar) and id 9 (More Vegetable) to check their corresponding effects on BMI level. In the alluvial, we showed a BMI level change from previous year to current year by cross these combinations. 
 
-    whq_final <- read.csv("data/whq_final.csv")
+As we can see in the graph, there exists a large amount of individuals who implemented the these three combinations and loss their weight accordingly. However, there still exists some people who tried the combined dietary but didn't work out very well.
 
-    whq_final$prev_bmi_level <- factor(whq$prev_bmi_level, 
-                            levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
-    whq_final$curr_bmi_level <- factor(whq$curr_bmi_level, 
-                            levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
 
-    change_final <- whq_final |>
-          group_by(prev_bmi_level, meal_combination, dietary_combination, curr_bmi_level) |>
-          summarise(frequency = n(), .groups = 'drop') |>
-          rename("Freq" = frequency)
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=10}
+#| warning: false
+library(ggalluvial)
 
-    ggplot(change_final, aes(y = Freq, axis1 = prev_bmi_level, axis2 = meal_combination, axis3 = dietary_combination, axis4 = curr_bmi_level)) +
-          geom_alluvium(aes(fill = prev_bmi_level), width = 1/12) +
-          geom_stratum(width = 1/12) +
-          geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
-          scale_x_discrete(expand = c(0.05, 0.05)) +
-          scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +
-          labs(title = "BMI Level Change") +
-          annotate("text", x = 1, y = 0, label = "prev_bmi_level", vjust = 1.5, hjust = 0.5) +
-          annotate("text", x = 2, y = 0, label = "meal_combination", vjust = 1.5, hjust = 0.5) +
-          annotate("text", x = 3, y = 0, label = "dietary_combination", vjust = 1.5, hjust = 0.5) +
-          annotate("text", x = 4, y = 0, label = "curr_bmi_level", vjust = 1.5, hjust = 0.5) +
-          theme(axis.title.x = element_blank()) 
-    ```
+whq_final <- read.csv("data/whq_final.csv")
+
+whq_final$prev_bmi_level <- factor(whq$prev_bmi_level, 
+                                   levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
+whq_final$curr_bmi_level <- factor(whq$curr_bmi_level,
+                                   levels = c('Underweight', 'Healthy Weight', 'Overweight', 'Obese'))
+
+change_final <- whq_final |>
+  group_by(prev_bmi_level, meal_combination, dietary_combination, curr_bmi_level) |>
+  summarise(frequency = n(), .groups = 'drop') |>
+  rename("Freq" = frequency)
+    
+# Check if the BMI level has changed
+change_final$level_changed <- ifelse(change_final$prev_bmi_level != change_final$curr_bmi_level, TRUE, FALSE)
+
+# Filter out the changed levels
+change_final <- change_final |> 
+  filter(level_changed == TRUE)
+
+ggplot(change_final, aes(y = Freq, axis1 = prev_bmi_level, axis2 = dietary_combination, axis3 = curr_bmi_level)) +
+  geom_alluvium(aes(fill = prev_bmi_level), width = 1/12) +
+  geom_stratum(width = 1/12) +
+  geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+  scale_x_discrete(expand = c(0.05, 0.05)) +
+  scale_fill_brewer(type = "qual", palette = "RdBu", direction = -1) +
+  labs(title = "BMI Level Change") +
+  annotate("text", x = 1, y = 0, label = "prev_bmi_level", vjust = 1.5, hjust = 0.5) +
+  annotate("text", x = 2, y = 0, label = "dietary_combination", vjust = 1.5, hjust = 0.5) +
+  annotate("text", x = 3, y = 0, label = "curr_bmi_level", vjust = 1.5, hjust = 0.5) +
+  theme(axis.title.x = element_blank()) 
+```
